@@ -6,4 +6,27 @@
     <welcome-file-list>
         <welcome-file>main/main.jsp</welcome-file>
     </welcome-file-list>
+    <security-constraint>
+        <display-name>Default Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>Main</web-resource-name>
+            <description/>
+            <url-pattern>/main/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>Default Constraint</description>
+            <role-name>applicant</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <form-login-config>
+            <form-login-page>/public/login.jsp</form-login-page>
+            <form-error-page>/public/login.jsp?error=1</form-error-page>
+        </form-login-config>
+    </login-config>
+    <security-role>
+        <description>Role for Job Applicants</description>
+        <role-name>applicant</role-name>
+    </security-role>
 </web-app>
