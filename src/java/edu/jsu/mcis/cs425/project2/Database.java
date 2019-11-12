@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 public class Database {
     
     
-    private String displayname;
+    
     private int userid ;
     
     private Connection getConnection() {
@@ -60,9 +60,11 @@ public class Database {
                        //use key name "id" for the ID, and "displayname" for the
                        //displayname
                        results = new HashMap<>();
-                       String id = resultset.getString("id");
+                       String id = String.valueOf(resultset.getInt("id"));
                        String displayname = resultset.getString("displayname");
-                       results.put(id, displayname);
+                       results.put("id", id);
+                       results.put("displayname",displayname);
+                       
                        
                        
                        
@@ -73,7 +75,7 @@ public class Database {
         catch(Exception e){
             e.printStackTrace();
         }
-        return null; //needs to return the HashMap
+        return results; //needs to return the HashMap
     
     }
 }
