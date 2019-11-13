@@ -20,6 +20,11 @@ public class Database {
     
     
 
+
+
+    
+    private int userid ;
+
     
     private Connection getConnection() {
         Connection conn = null;
@@ -62,7 +67,11 @@ public class Database {
                        String id = String.valueOf(resultset.getInt("id"));
                        String displayname = resultset.getString("displayname");
                        results.put("id", id);
-                       results.put("displayname", displayname);
+
+
+                       results.put("displayname",displayname);
+                       
+
                        
                        
                        
@@ -74,8 +83,10 @@ public class Database {
             e.printStackTrace();
         }
         return results; //needs to return the HashMap
+
     
     }
+
     
     
     public String getSkillsListAsHTML(int userid){

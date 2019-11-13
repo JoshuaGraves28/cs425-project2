@@ -1,0 +1,38 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Nov 12, 2019, 9:26:54 AM
+    Author     : JSU
+*/
+body{
+    background: #000000;
+    font-family: verdana, arial, sans-serif;
+    font-size: 80%;
+    
+}
+#loginform{
+    background: #000000;
+    position:relative;
+    color: #ffffff;
+    text-align: center;
+}
+
+
+#middle {     
+    width: 300px;           /* Set this to your convenience */
+    height: 200px;          /* Set this to your convenience */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -100px;     /* Half of height */
+    margin-left: -150px;     /* Half of width */
+}
+.resizedTextbox{
+    width: 200px; 
+    height: 20px;
+    position: relative;
+    
+}
