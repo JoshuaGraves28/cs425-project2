@@ -7,7 +7,9 @@ public class BeanApplicant {
     private String username;
     private String displayname;
     private int id;
-
+    
+    ///private String[] skills;
+    
     public void setUserInfo(){
         Database db = new Database();
         HashMap<String, String> userinfo = db.getUserInfo(username);
@@ -18,7 +20,10 @@ public class BeanApplicant {
     
     
     }
-    
+    public String getSkillsList(){
+       Database db = new Database();
+      return(db.getSkillsListAsHTML(id));
+    }
     
     
     

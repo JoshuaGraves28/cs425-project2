@@ -19,8 +19,7 @@ import javax.sql.DataSource;
 public class Database {
     
     
-    private String displayname;
-    private int userid ;
+
     
     private Connection getConnection() {
         Connection conn = null;
@@ -46,7 +45,7 @@ public class Database {
         try{
                Connection conn = getConnection();
                
-               String query = "SELECT * FROM 'user' WHERE username = ?";
+               String query = "SELECT * FROM user WHERE username = ?";
                PreparedStatement pstatement = conn.prepareStatement(query);
                pstatement.setString(1, username);
                
@@ -60,9 +59,10 @@ public class Database {
                        //use key name "id" for the ID, and "displayname" for the
                        //displayname
                        results = new HashMap<>();
-                       String id = resultset.getString("id");
+                       String id = String.valueOf(resultset.getInt("id"));
                        String displayname = resultset.getString("displayname");
-                       results.put(id, displayname);
+                       results.put("id", id);
+                       results.put("displayname", displayname);
                        
                        
                        
@@ -73,8 +73,43 @@ public class Database {
         catch(Exception e){
             e.printStackTrace();
         }
-        return null; //needs to return the HashMap
+        return results; //needs to return the HashMap
     
+    }
+    
+    
+    public String getSkillsListAsHTML(int userid){
+        String skillList;
+        StringBuilder skills = new StringBuilder();
+        ResultSetMetaData metadata = null;
+        try{
+               Connection conn = getConnection();
+               
+               String query = "SELECT * FROM skills ";
+               PreparedStatement pstatement = conn.prepareStatement(query);
+               
+               
+               boolean hasresults = pstatement.execute();
+               
+                if( hasresults){
+                   ResultSet resultset = pstatement.getResultSet();
+                   metadata = resultset.getMetaData();
+                   int numberOfColumns = metadata.getColumnCount();
+
+                   while(resultset.next()){
+                       for (int i = 1; i <= numberOfColumns; i++) {
+                       skills.append(resultset.getString(i));
+                       skills.append("\n");
+                       }
+                   }
+                }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }      
+        skillList = skills.toString();
+        
+        return skillList;
     }
 }
     
