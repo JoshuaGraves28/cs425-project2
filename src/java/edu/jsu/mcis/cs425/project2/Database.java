@@ -96,7 +96,7 @@ public class Database {
         try{
                Connection conn = getConnection();
                
-               String query = "SELECT * FROM skills ";
+               String query = "SELECT skills.*, a.userid FROM skills LEFT JOIN ( SELECT * FROM applicants_to_skills WHERE userid = 1) AS a ON skills.id = a.skillsid; ";
                PreparedStatement pstatement = conn.prepareStatement(query);
                
                
@@ -105,13 +105,30 @@ public class Database {
                 if( hasresults){
                    ResultSet resultset = pstatement.getResultSet();
                    metadata = resultset.getMetaData();
-                   int numberOfColumns = metadata.getColumnCount();
+                   
 
                    while(resultset.next()){
-                       for (int i = 1; i <= numberOfColumns; i++) {
-                       skills.append(resultset.getString(i));
-                       skills.append("\n");
+                       String description = resultset.getString("description");
+                       int id = resultset.getInt("id");
+                       int user = resultset.getInt("userid");
+                       //skills.append("<input type=\"checkbox\" name=\"skills\" value=\"1\" id=\"skills_\" checked>");
+                       //skills.append("<label for=\"skills_\">.</label><br />");
+                       
+                       skills.append("<input type=\"checkbox\" name=\"skills\" value=\"");
+                       skills.append(id);
+                       skills.append("\" id=\"skills_").append(id).append("\" ");
+                       if(user !=0){
+                           skills.append("checked  ");
                        }
+                       
+                       
+                       skills.append(">\n");
+                       
+                       skills.append("<label for=\"skills_").append(id).append("\">");
+                       skills.append(description);
+                       skills.append("</label><br />\n\n");
+                       
+                       
                    }
                 }
         }
@@ -122,6 +139,9 @@ public class Database {
         
         return skillList;
     }
+    
+    
+    
 }
     
     

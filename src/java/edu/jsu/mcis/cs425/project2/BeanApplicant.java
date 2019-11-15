@@ -8,7 +8,7 @@ public class BeanApplicant {
     private String displayname;
     private int id;
     
-    ///private String[] skills;
+    private String[] skills;
     
     public void setUserInfo(){
         Database db = new Database();
@@ -24,8 +24,14 @@ public class BeanApplicant {
        Database db = new Database();
       return(db.getSkillsListAsHTML(id));
     }
-    
-    
+
+    public String[] getSkills() {
+        return skills;
+    }
+
+    public void setSkills(String[] skills) {
+        this.skills = skills;
+    }
     
     
     public String getDisplayname() {

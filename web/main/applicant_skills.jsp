@@ -14,6 +14,7 @@
             <fieldset>
                 <legend>Select Your Skills:</legend>
                 <jsp:getProperty name="applicant" property="skillsList" />
+                
                 <input type="submit" value="Submit" />
                  
             </fieldset>
