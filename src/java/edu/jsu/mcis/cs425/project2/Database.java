@@ -17,13 +17,6 @@ import javax.servlet.ServletException;
 import javax.sql.DataSource;
 
 public class Database {
-    
-    
-
-
-
-    
-    private int userid ;
 
     
     private Connection getConnection() {
@@ -92,7 +85,7 @@ public class Database {
     public String getSkillsListAsHTML(int userid){
         String skillList;
         StringBuilder skills = new StringBuilder();
-        ResultSetMetaData metadata = null;
+       
         try{
                Connection conn = getConnection();
                
@@ -104,7 +97,7 @@ public class Database {
                
                 if( hasresults){
                    ResultSet resultset = pstatement.getResultSet();
-                   metadata = resultset.getMetaData();
+                   
                    
 
                    while(resultset.next()){
@@ -138,6 +131,56 @@ public class Database {
         skillList = skills.toString();
         
         return skillList;
+    }
+    public void setSkillsList(int userid, String[] skills){
+        
+        try{
+               Connection conn = getConnection();
+               
+       
+        
+               PreparedStatement stmt = conn.prepareStatement("DELETE FROM applicants_to_skills WHERE userid = ?");
+               stmt.setInt(1, userid);
+               stmt.execute();
+               PreparedStatement pstatement = conn.prepareStatement("INSERT INTO applicants_to_skills (userid, skillsid) VALUES(?,?)" );
+                for (String skill : skills) {
+                    int skillsid = Integer.parseInt(skill);
+                    pstatement.setInt(1, userid);
+                    pstatement.setInt(2, skillsid);
+                    pstatement.addBatch();
+                }
+                int[] r= pstatement.executeBatch();
+                
+        
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        
+        
+        
+        }
+        
+        
+        
+        
+        
+    }
+    public String getJobsListAsHTML(int userid){
+        StringBuilder jobsList = new StringBuilder();
+        //try{
+               Connection conn = getConnection();
+               
+               //String query = " SELECT jobs.*, a.userid  LEFT JOIN( SELECT * FROM applicants_to_skills WHERE userid = 1)AS a ON jobs.id = a.skillsid;";
+               //PreparedStatement pstatement = conn.prepareStatement(query);
+               
+               
+               //boolean hasresults = pstatement.execute();
+               
+                //if( hasresults){
+                 //  ResultSet resultset = pstatement.getResultSet();
+        
+        
+        return null;
     }
     
     

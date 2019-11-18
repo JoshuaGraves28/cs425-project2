@@ -20,6 +20,16 @@ public class BeanApplicant {
     
     
     }
+    
+   public void setSkillsList() {
+        Database db = new Database();
+        db.setSkillsList(id, skills);
+}
+   public String getJobsList() {
+        Database db = new Database();
+        return ( db.getJobsListAsHTML(id) );
+}
+   
     public String getSkillsList(){
        Database db = new Database();
       return(db.getSkillsListAsHTML(id));

@@ -1,0 +1,18 @@
+body{
+    background: #f4f0dd;
+    font-family: verdana, arial, sans-serif;
+    font-size: 80%;
+    
+}
+
+
+header{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    overflow: hidden;
+    background-color: #ff0033;
+    text-align: center;
+}
