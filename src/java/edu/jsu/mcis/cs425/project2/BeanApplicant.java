@@ -9,7 +9,7 @@ public class BeanApplicant {
     private int id;
     
     private String[] skills;
-    
+    private String[] jobs;
     public void setUserInfo(){
         Database db = new Database();
         HashMap<String, String> userinfo = db.getUserInfo(username);
@@ -20,15 +20,23 @@ public class BeanApplicant {
     
     
     }
+    public void setJobsList() {
+        Database db = new Database();
+        db.setJobsList(id, jobs);
+     }
+
+    public String[] getJobs() {
+        return jobs;
+    }
     
    public void setSkillsList() {
         Database db = new Database();
         db.setSkillsList(id, skills);
-}
+    }
    public String getJobsList() {
         Database db = new Database();
         return ( db.getJobsListAsHTML(id) );
-}
+    }
    
     public String getSkillsList(){
        Database db = new Database();

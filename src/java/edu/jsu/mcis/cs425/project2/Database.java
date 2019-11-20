@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 public class Database {
 
     
-    private Connection getConnection() {
+    public Connection getConnection() {
         Connection conn = null;
         try {
             
@@ -170,7 +170,7 @@ public class Database {
         //try{
                Connection conn = getConnection();
                
-               //String query = " SELECT jobs.*, a.userid  LEFT JOIN( SELECT * FROM applicants_to_skills WHERE userid = 1)AS a ON jobs.id = a.skillsid;";
+               //String query = " ";
                //PreparedStatement pstatement = conn.prepareStatement(query);
                
                
@@ -183,7 +183,33 @@ public class Database {
         return null;
     }
     
-    
+     public void setJobsList(int userid, String[] jobs){
+         try{
+               Connection conn = getConnection();
+               
+       
+        
+               PreparedStatement stmt = conn.prepareStatement("DELETE FROM applicants_to_jobs WHERE userid = ?");
+               stmt.setInt(1, userid);
+               stmt.execute();
+               PreparedStatement pstatement = conn.prepareStatement("INSERT INTO applicants_to_jobs (userid, jobsid) VALUES(?,?)" );
+                for (String job : jobs) {
+                    int jobsid = Integer.parseInt(job);
+                    pstatement.setInt(1, userid);
+                    pstatement.setInt(2, jobsid);
+                    pstatement.addBatch();
+                }
+                int[] r= pstatement.executeBatch();
+                
+        
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        
+        
+        
+        }
+     }
     
 }
     
