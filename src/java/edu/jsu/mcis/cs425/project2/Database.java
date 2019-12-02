@@ -167,20 +167,58 @@ public class Database {
     }
     public String getJobsListAsHTML(int userid){
         StringBuilder jobsList = new StringBuilder();
-        //try{
+        try{
                Connection conn = getConnection();
                
-               //String query = " ";
-               //PreparedStatement pstatement = conn.prepareStatement(query);
+               String query = "SELECT jobs.id, jobs.name, a.userid FROM\n "+
+                       "jobs LEFT JOIN (SELECT * FROM applicants_to_jobs WHERE userid= 1) AS a\n"+
+                       "ON jobs.id = a.jobsid\n"+
+                       "WHERE jobs.id  IN\n"+
+                       "( SELECT jobsid AS id FROM\n"+
+                       "(applicants_to_skills JOIN skills_to_jobs\n"+
+                       "ON applicants_to_skills.skillsid = skills_to_jobs.skillsid)\n"+
+                       "WHERE applicants_to_skills.userid= 1)\n"+
+                       "ORDER BY jobs.name;";
+               PreparedStatement pstatement = conn.prepareStatement(query);
                
                
-               //boolean hasresults = pstatement.execute();
+               boolean hasresults = pstatement.execute();
+              
                
-                //if( hasresults){
-                 //  ResultSet resultset = pstatement.getResultSet();
+                if( hasresults){
+                   ResultSet resultset = pstatement.getResultSet();
+                      while(resultset.next()){
+                       String description = resultset.getString("name");
+                       int id = resultset.getInt("id");
+                       int user = resultset.getInt("userid");
+                       
+                       
+                       jobsList.append("<input type=\"checkbox\" name=\"skills\" value=\"");
+                       jobsList.append(id);
+                       jobsList.append("\" id=\"skills_").append(id).append("\" ");
+                       if(user !=0){
+                           jobsList.append("checked  ");
+                       }
+                       
+                       
+                       jobsList.append(">\n");
+                       
+                       jobsList.append("<label for=\"skills_").append(id).append("\">");
+                       jobsList.append(description);
+                       jobsList.append("</label><br />\n\n");
+                       
+                       
+                   }
+                   
+                }
+        }
+        catch(Exception e){
+            e.printStackTrace();
         
         
-        return null;
+        
+        }
+        return jobsList.toString();
     }
     
      public void setJobsList(int userid, String[] jobs){

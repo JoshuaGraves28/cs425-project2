@@ -76,5 +76,9 @@ public class BeanApplicant {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    public void setJobs(String[] jobs) {
+        this.jobs = jobs;
+    }
     
 }
